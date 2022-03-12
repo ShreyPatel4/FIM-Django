@@ -60,6 +60,15 @@ class UserProfile(models.Model):
                         ContentFile(s))
 
 
+# Create a model to save uploaded files to the media folder from upload.html
+class UploadedFile(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="uploaded_files")
+    file = models.FileField(upload_to='uploads/%Y/%m/%d/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.file.name
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
