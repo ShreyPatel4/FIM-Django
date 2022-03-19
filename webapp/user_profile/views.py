@@ -47,14 +47,14 @@ class UserUploadView(FormView, LoginRequiredMixin):
         return super(UserUploadView, self).form_valid(form)
 
 class UserUploadSuccessView(TemplateView, LoginRequiredMixin):
-    print(">>>>>>hiii")
+    # print(">>>>>>hiii")
     # open upload_success.html
     template_name = "user_profile/upload_success.html"
     # save the file to the media folder
     # return the file data to template
     
     def get(self, request, *args, **kwargs):
-        print("1",request)
+        #print("1",request)
         return render(request, self.template_name)
     def post(self, request, *args, **kwargs):
         # fetch the uploaded file
