@@ -35,4 +35,33 @@ class UserProfileView(TemplateView, LoginRequiredMixin):
 
 
 class UserStatusView(TemplateView, LoginRequiredMixin):
-    template_name = "user_profile/status.html"
+    template_name = "user_profile/status.html" 
+
+class UserUploadView(FormView, LoginRequiredMixin):
+    template_name = "user_profile/upload.html"
+    form_class = UserProfileModelForm
+    success_url = '/accounts/profile/'
+
+    def form_valid(self, form):
+        form.save()
+        return super(UserUploadView, self).form_valid(form)
+
+class UserUploadSuccessView(TemplateView, LoginRequiredMixin):
+    # print(">>>>>>hiii")
+    # open upload_success.html
+    template_name = "user_profile/upload_success.html"
+    # save the file to the media folder
+    # return the file data to template
+    
+    def get(self, request, *args, **kwargs):
+        #print("1",request)
+        return render(request, self.template_name)
+    def post(self, request, *args, **kwargs):
+        # fetch the uploaded file
+        # save it to the media folder
+        # return the file data to template
+        return render(request, self.template_name)
+    def get_context_data(self, **kwargs):
+        context = super(UserUploadSuccessView, self).get_context_data(**kwargs)
+        return context
+    
